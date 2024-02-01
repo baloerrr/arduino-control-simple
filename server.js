@@ -3,7 +3,6 @@ const {SerialPort} = require("serialport")
 const {ReadlineParser} = require("@serialport/parser-readline")
 const {Server} = require("socket.io")
 const http = require("http")
-const { log } = require("console")
 
 const app = express()
 const server = http.createServer(app)
@@ -30,7 +29,7 @@ const port = new SerialPort({
 const parser = port.pipe(new ReadlineParser({delimiter: "\r\n"}))
 
 parser.on("data", (result) => {
-    console.log("Data dari arduino -> ", result);
+    console.log("Distances from ultrasonic -> ", result);
     io.emit("data", {data: result})
 })
 
