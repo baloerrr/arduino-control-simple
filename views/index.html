@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino Control</title>
+</head>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io()
+
+    socket.on("data", ({data}) => {
+        let component = document.getElementById("data");
+        component.textContent = "dari arduino => " + data
+    })
+
+    function Arduino(data) {
+        fetch("http://localhost:3000/arduinoApi", {
+            method: "POST",
+            body: JSON.stringify({data}),
+            headers: {
+                "Content-Type" : "application/json"
+            }
+        })
+    }
+</script>
+<body>
+    <p id="data"></p>
+    <button onclick="Arduino('1')">On</button>
+    <button onclick="Arduino('2')">Off</button>
+</body>
+</html>
